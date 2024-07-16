@@ -1,0 +1,388 @@
+﻿{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Bootstrap CSS -->
+
+    <script src="{% static 'jquery.js' %}"></script>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'homepage/bootstrap/css/bootstrap.min.css' %}"
+    />
+
+    <title>CureConnect - Your Health Partner</title>
+
+    <link
+      rel="stylesheet"
+      href="{% static 'homepage/bootstrap/css/bootstrap.min.css' %}"
+    />
+    <link rel="stylesheet" href="{% static 'homepage/css.css' %}" />
+
+    <style>
+      .img {
+        position: relative;
+        float: left;
+        width: 200px;
+        height: 200px;
+        background-position: 100% 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      body {
+        background-image: url("{% static 'homepage/blue.jpg' %}");
+        background-attachment: fixed;
+        opacity: 0.93;
+        background-repeat: no-repeat;
+
+        background-size: cover;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+
+    {% block head %} {% endblock %}
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="page-header mt-1 mb-1 ml-1">
+        <h1
+          style="
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2c3e50;
+            font-size: 50px;
+          "
+        >
+          CURE CONNECT
+        </h1>
+        <h6
+          style="
+            font-family: 'Arial', sans-serif;
+            color: #2980b9;
+            font-size: 18px;
+          "
+        >
+          Connecting Health, Curing Lives!
+        </h6>
+      </div>
+    </div>
+
+    <nav
+      class="navbar navbar-expand-lg navbar-dark"
+      style="background-color: #127197"
+    >
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img
+          src="{% static 'homepage/logo.png' %}"
+          alt="Cure Connect Logo"
+          style="height: 100px; border-radius: 20%"
+        />
+      </a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %} {% if user.patient %}
+          <li class="nav-item">
+            <span class="nav-link hello-user" style="color: rgb(170, 245, 255)"
+              >Hello, {{user.patient.name}}</span
+            >
+          </li>
+          {% endif %} {% if user.doctor %}
+          <li class="nav-item">
+            <span class="nav-link hello-user" style="color: rgb(170, 245, 255)"
+              >Hello, Dr. {{user.doctor.name}}</span
+            >
+          </li>
+          {% endif %} {% if user.is_superuser %}
+          <li class="nav-item">
+            <span class="nav-link hello-user" style="color: rgb(170, 245, 255)"
+              >Admin: {{user.username}}</span
+            >
+          </li>
+          {% endif %} {% endif %}
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">
+              <button class="nav-btn">Home</button>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#About">
+              <button class="nav-btn">About</button>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#Contact">
+              <button class="nav-btn">Contact</button>
+            </a>
+          </li>
+
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            {% if user.is_superuser %}
+            <a class="nav-link" href="{% url 'admin_ui' %}">
+              <button class="nav-btn">Admin Profile</button>
+            </a>
+            {% elif user.doctor %}
+            <a class="nav-link" href="{% url 'doctor_ui' %}">
+              <button class="nav-btn">Doctor Profile</button>
+            </a>
+            {% elif user.patient %}
+            <a class="nav-link" href="{% url 'patient_ui' %}">
+              <button class="nav-btn">Patient Profile</button>
+            </a>
+            {% endif %}
+          </li>
+          <li class="nav-item ml-2">
+            <button
+              class="btn btn-danger btn-xs"
+              data-toggle="modal"
+              data-target="#logout-modal"
+              style="color: rgb(247, 190, 188)"
+            >
+              Log out
+            </button>
+          </li>
+
+          <!-- Small modal -->
+          <div
+            class="modal fade"
+            id="logout-modal"
+            tabindex="-1"
+            role="dialog"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4>Logout <i class="fa fa-lock"></i></h4>
+                </div>
+                <div class="modal-body">
+                  <i class="fa fa-question-circle"></i>
+                  <span style="color: rgb(42, 187, 6)"
+                    >{{user.patient.name}}</span
+                  >, Are you sure you want to log-off?
+                </div>
+                <div class="modal-footer">
+                  <a href="{% url 'logout' %}" class="btn btn-primary btn-block"
+                    >Logout</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <li class="nav-item ml-2">
+            <a
+              class="nav-link"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg2"
+            >
+              <button class="auth-btn">Sign Up</button>
+            </a>
+          </li>
+          <li class="nav-item ml-2">
+            <a
+              class="nav-link"
+              data-toggle="modal"
+              data-target=".bd-example-modal-lg"
+            >
+              <button class="auth-btn">Sign In</button>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <style>
+      .hello-user {
+        font-size: 15px; /* Increase font size */
+        font-weight: bold;
+        display: inline-block;
+        padding: 10px 20px;
+        color: rgb(170, 245, 255);
+        background-color: transparent;
+        border: none;
+      }
+
+      .nav-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px; /* Rounded borders */
+        background-color: transparent; /* Initial background color */
+        color: white;
+        transition: background-color 0.3s ease, opacity 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .auth-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 14px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px; /* Rounded borders */
+        background-color: rgb(80, 206, 223); /* Initial background color */
+        color: white;
+        transition: background-color 0.3s ease, opacity 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .nav-btn:hover,
+      .auth-btn:hover {
+        background-color: #004a63; /* Change color on hover */
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+      }
+
+      .nav-btn:active,
+      .auth-btn:active {
+        opacity: 0.8; /* Less transparent on click */
+      }
+
+      .nav-item {
+        margin: 0 10px; /* Add margin between nav items */
+        display: flex;
+        align-items: center; /* Center items vertically */
+      }
+
+      .navbar-nav {
+        display: flex;
+        align-items: center; /* Center items vertically */
+      }
+    </style>
+
+    <!-- Large modal -->
+
+    <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <center>
+            <h1>Sign-In As</h1>
+          </center>
+          <br /><br />
+          <center>
+            <form>
+              <div class="container mt-5 mb-5">
+                <div class="row">
+                  <div class="col">
+                    <a href="{% url 'sign_in_admin' %}">
+                      <button type="button" class="sign-in-btn">
+                        Sign In as Admin
+                      </button>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a href="{% url 'sign_in_doctor' %}">
+                      <button type="button" class="sign-in-btn">
+                        Sign In as Doctor
+                      </button>
+                    </a>
+                  </div>
+                  <div class="col">
+                    <a href="{% url 'sign_in_patient' %}">
+                      <button type="button" class="sign-in-btn">
+                        Sign In as Patient
+                      </button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </center>
+        </div>
+      </div>
+    </div>
+
+    {% block body %} {% endblock %}
+
+    <style>
+      .sign-in-btn {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-size: 16px; /* Adjust font size as needed */
+        font-weight: bold;
+        border: none;
+        background-color: #127197;
+        color: white;
+        transition: background-color 0.3s ease, opacity 0.3s ease,
+          box-shadow 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow property */
+      }
+
+      .sign-in-btn:hover {
+        background-color: #ffffff;
+        color: #127197;
+      }
+
+      .sign-in-btn:active {
+        opacity: 0.8; /* Less transparent on click */
+      }
+
+      .modal-content {
+        padding: 20px; /* Add padding to the modal content */
+      }
+    </style>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.js"
+      integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

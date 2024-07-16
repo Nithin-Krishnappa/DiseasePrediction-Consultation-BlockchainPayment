@@ -1,1 +1,174 @@
+{% extends "basic.html" %} {% load static %} {% block head %}
+<link
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet"
+/>
 
+<style>
+  body {
+    position: relative;
+    box-shadow: 0px 0px 20px 0px rgb(219, 218, 218) !important;
+    background-color: #5f94c21a !important;
+  }
+
+  .container {
+    max-width: 1170px;
+    margin: auto;
+  }
+
+  .card {
+    margin: 20px;
+  }
+
+  .card-header {
+    background-color: #25a8d8;
+    color: white;
+  }
+
+  .card-body {
+    background-color: #f8f9fa;
+    padding: 20px;
+  }
+
+  .btn-custom {
+    background-color: #05728f;
+    color: white;
+    border: none;
+  }
+
+  .btn-custom:hover {
+    background-color: #035f73;
+  }
+</style>
+{% endblock %} {% block body %}
+<br />
+<center><h2>Payment</h2></center>
+<br />
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h4>Make a Payment</h4>
+    </div>
+    <div class="card-body">
+      <form id="payment-form">
+        <div class="form-group">
+          <label for="amount">Amount (ETH):</label>
+          <input
+            type="number"
+            class="form-control"
+            id="amount"
+            name="amount"
+            placeholder="Enter amount"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="message">Message (optional):</label>
+          <textarea
+            class="form-control"
+            id="message"
+            name="message"
+            rows="3"
+            placeholder="Enter your message"
+          ></textarea>
+        </div>
+        <div style="display: flex; justify-content: space-between; gap: 1rem">
+          <button
+            type="button"
+            class="btn btn-custom"
+            onclick="connectMetaMask()"
+          >
+            Connect MetaMask
+          </button>
+          <button
+            type="button"
+            class="btn btn-custom"
+            onclick="sendTransaction()"
+          >
+            Send Payment
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Instructions</h4>
+    </div>
+    <div class="card-body">
+      <p>
+        Please make sure you have MetaMask installed and configured before
+        attempting to make a payment.
+      </p>
+      <ul>
+        <li>
+          Ensure you have the correct amount of Ether in your MetaMask wallet.
+        </li>
+        <li>Click "Connect MetaMask" to connect your wallet.</li>
+        <li>Enter the amount you wish to pay and any optional message.</li>
+        <li>Click "Send Payment" to initiate the transaction.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+<script>
+  let web3;
+  let userAccount;
+
+  async function connectMetaMask() {
+    if (window.ethereum) {
+      try {
+        web3 = new Web3(window.ethereum);
+        const accounts = await ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        userAccount = accounts[0];
+        alert("MetaMask connected: " + userAccount);
+      } catch (error) {
+        console.error("User rejected the request.");
+      }
+    } else {
+      alert(
+        "MetaMask is not installed. Please install MetaMask and try again."
+      );
+    }
+  }
+
+  async function sendTransaction() {
+    if (!web3) {
+      alert("Please connect MetaMask first.");
+      return;
+    }
+
+    const amount = document.getElementById("amount").value;
+    const message = document.getElementById("message").value;
+    const predefinedAddress = "0x0160844C934F16351F8a46eAE073A270Ea2d5E6A"; // Replace with your predefined address
+
+    if (amount <= 0) {
+      alert("Please enter a valid amount.");
+      return;
+    }
+
+    try {
+      const transactionParameters = {
+        to: predefinedAddress,
+        from: userAccount,
+        value: web3.utils.toWei(amount, "ether"),
+        gas: "21000",
+        data: web3.utils.toHex(message),
+      };
+
+      const txHash = await web3.eth.sendTransaction(transactionParameters);
+      alert("Transaction successful! Hash: " + txHash.transactionHash);
+    } catch (error) {
+      console.error("Transaction failed:", error);
+      alert("Transaction failed. Please try again.");
+    }
+  }
+</script>
+
+{% endblock %}

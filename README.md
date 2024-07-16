@@ -3,7 +3,7 @@
 ## Overview
 
 CureConnect is a comprehensive healthcare management system integrating machine learning and blockchain technology to provide a secure and efficient platform for patients, doctors, and administrators. This project addresses key challenges in healthcare by facilitating accurate disease prediction, seamless doctor-patient interaction, and secure payment processing.
-
+for more reference goto https://github.com/GulshanMS/DiseasePrediction-Consultation-BlockchainPayment
 ## Features
 
 ### Home Page

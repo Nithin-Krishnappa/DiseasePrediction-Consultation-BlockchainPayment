@@ -1,0 +1,321 @@
+﻿
+{% extends "basic.html" %}
+{% load static %}
+
+ 
+	{% block head %}
+
+
+{% endblock %}
+
+
+
+
+{% block body %}
+<style>
+
+.banner {
+  width: 100%;
+  height: 650px; /* Adjust height as needed */
+  overflow: hidden;
+  position: relative;
+}
+
+.banner img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+</style>
+
+
+<div class="banner">
+  <img src="{% static 'homepage/banner.jpg' %}" class="img-fluid" alt="Banner Image">
+</div>
+    
+<div class="jumbotron" id="About">
+    <h1 class="display-4">About Us</h1>
+    <p class="lead">
+      At CureConnect, we believe in the power of connectivity to transform healthcare. Our platform bridges the gap between patients and doctors, enabling seamless interactions, accurate disease diagnosis, and secure blockchain payments. Whether you need to consult with a specialist, manage your health records, or schedule an appointment, CureConnect ensures that your health is in capable hands. Our advanced technology provides accurate disease detection, and our extensive network of healthcare professionals ensures that you receive the best care possible. With CureConnect, we're not just connecting health services—we're curing lives, one connection at a time.
+    </p>
+                
+  
+     {% if user.is_authenticated %}
+
+     
+     {% else %}
+
+      <p class="lead">
+      <button type="button" class="btn btn-primary btn-lg"  data-toggle="modal" data-target=".bd-example-modal-lg">Get started</button>
+      </p>
+    
+
+</div>
+
+<br><br><br>
+<div class="container mt-5 mb-3" style="width:fit-content;">
+  <center>
+      <h1>Sign-In As</h1>
+  </center>
+
+  <form>
+      <div class="container mt-5 mb-5">
+          <div class="row">
+              <div class="col">
+                  <a href="{% url 'sign_in_admin' %}">
+                      <button type="button" class="btn">Admin</button>
+                  </a>
+              </div>
+              <div class="col">
+                  <a href="{% url 'sign_in_doctor' %}">
+                      <button type="button" class="btn">Doctor</button>
+                  </a>
+              </div>
+              <div class="col">
+                  <a href="{% url 'sign_in_patient' %}">
+                      <button type="button" class="btn">Patient</button>
+                  </a>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+
+<style>
+  .btn {
+      display: block;
+      width: 200px;
+      padding: 15px;
+      margin: 10px auto;
+      font-size: 25px;
+      color: white;
+      background-color: #007bff;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .btn:hover {
+      background-color: #a0d8f1;
+      transform: scale(1.05);
+      color: #007bff;
+  }
+  .btn:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(114, 152, 192, 0.25);
+  }
+  a:hover {
+        text-decoration: none;
+    }
+</style>
+
+
+
+    
+
+    {% endif %}
+
+<br><br>
+
+
+
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+   
+<center>
+  <h1>Sign-In  As</h1>
+  </center>
+<br><br>
+
+<center>
+<form>
+    <div class="container mt-5 mb-5">
+ <div class="row">
+    <div class="col">
+       <a href="{% url 'sign_in_admin' %}">
+<img  alt="admin" src="{% static 'homepage/admin.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_doctor' %}">
+<img  alt="doctor" src="{% static 'homepage/doctor.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_patient' %}">
+<img  alt="patient" src="{% static 'homepage/patient.png' %}"  class="img">
+</a>
+    </div>
+  </div>
+  </div>
+</form>
+</center>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <center>
+        <h1>Sign-Up As</h1>
+      </center>
+      <br><br>
+      <center>
+        <form>
+          <div class="container mt-5 mb-5">
+            <div class="row">
+              <div class="col">
+                <a href="{% url 'signup_doctor' %}">
+                  <button type="button" class="sign-up-btn">Sign Up as Doctor</button>
+                </a>
+              </div>
+              <div class="col">
+                <a href="{% url 'signup_patient' %}">
+                  <button type="button" class="sign-up-btn">Sign Up as Patient</button>
+                </a>
+              </div>
+            </div>
+          </div>
+        </form>
+      </center>
+    </div>
+  </div>
+</div>
+
+<style>
+    .sign-up-btn {
+        display: block;
+        width: 100%;
+        padding: 10px 20px;
+        margin: 10px 0;
+        font-size: 16px; /* Adjust font size as needed */
+        font-weight: bold;
+        border: none;
+        background-color: #127197;
+        color: white;
+        transition: background-color 0.3s ease, opacity 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow property */
+    }
+
+    .sign-up-btn:hover {
+        background-color: #ffffff; /* Change color on hover */
+        color: #127197;
+    }
+
+    .sign-up-btn:active {
+        opacity: 0.8; /* Less transparent on click */
+    }
+
+    .modal-content {
+        padding: 20px; /* Add padding to the modal content */
+    }
+</style>
+
+
+
+
+
+
+<br><br><br><br>
+<center><h2>Our Top Doctors</h2></center>
+<div class="row mt-5 mb-5">
+    <div class="col">
+        <div class="card">
+            <div class="card-body text-center">
+                <img  alt="admin" src="{% static 'homepage/drnithin.jpeg' %}" width="200" class="rounded">
+                <h5 class="card-title">Dr. NITHIN </h5>
+                <p class="card-text">Compassionate Primary Care Physician dedicated to providing personalized care for patients of all ages.</p>
+                
+            </div>
+        </div>
+    </div>
+  
+    <div class="col">
+      <div class="card">
+          <div class="card-body text-center">
+              <img  alt="admin" src="{% static 'homepage/k.jpeg' %}" width="200" class="rounded">
+              <h5 class="card-title">Dr. KAMALESH </h5>
+              <p class="card-text"> Renowned Cardiothoracic Surgeon with a precision-driven approach to complex surgical procedures.</p>
+              
+          </div>
+      </div>
+  </div>
+
+  <div class="col">
+    <div class="card">
+        <div class="card-body text-center">
+            <img  alt="admin" src="{% static 'homepage/g.jpeg' %}" width="200" class="rounded">
+            <h5 class="card-title">Dr. GULSHAN </h5>
+            <p class="card-text">Empathetic Psychiatrist specializing in holistic mental health solutions for individuals and families.</p>
+            
+        </div>
+    </div>
+</div>
+</div>
+  
+
+<br><br><br><br>
+
+
+
+
+    <div id="footer" class="card bg-dark text-white">
+      <div class="card-body" id="Contact" style="background-color: #28517a;">
+        Contact-
+     
+    <ul >
+     
+      <li >
+        <h5 class="mb-1">Email: cureconnectcare@gmail.com</h5>
+      </li>
+      <li >
+        <h5 class="mb-1">Contact no: + 91 988********</h5>
+      </li>
+      <li >
+        <h5 class="mb-1">Address: Kanakapura Main Rd, Bangalore</h5>
+        <!-- <div class="footer-copyright text-center">© 2024 Copyright:
+          <a href="#">App</a>
+        </div> -->
+      </li>
+      
+    </ul>
+  </div>
+  </div>
+
+  
+ 
+
+
+
+
+
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+    
+
+
+
+
+    
+{% endblock %}
